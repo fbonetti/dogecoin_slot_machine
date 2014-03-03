@@ -1,0 +1,51 @@
+// Place all the styles related to the game controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#games {
+
+  .slot-machine-container {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .reel {
+    width: 33%;
+    height: 450px;
+    float: left;
+    background-position: 50% 0;
+    background-repeat: repeat-y;
+    background-color: #FFF;
+  }
+
+  .left-reel {
+    background-image: url("/assets/left_reel.jpg");
+  }
+
+  .middle-reel {
+    background-image: url("/assets/middle_reel.jpg");
+  }
+
+  .right-reel {
+    background-image: url("/assets/right_reel.jpg");
+  }
+
+  .shadow {
+    -moz-box-shadow:    inset 0 0 20px #000000;
+    -webkit-box-shadow: inset 0 0 20px #000000;
+    box-shadow:         inset 0 0 20px #000000;
+  }
+
+  .qr-code {
+    border: 1px solid;
+  }
+
+  .bet-group {
+    input[type=radio] {
+      width: 0px;
+      opacity: 0;
+    }
+  }
+
+}
