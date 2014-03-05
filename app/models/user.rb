@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
 
   def assign_random_username
     self.username = loop do
-      random_username = %w[Doge Shibe Crypto Anon User].sample + rand(1..1_000_000)
+      random_username = %w[Doge Shibe Crypto Anon User].sample + rand(1..1_000_000).to_s
       break random_username unless User.exists?(username: random_username)
     end
   end
