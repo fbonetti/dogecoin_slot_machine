@@ -36,10 +36,18 @@ class SlotMachine
     @reels << Reel.new(:lemon, :rocket, :bell, :orange, :bell, :cherry, :orange, :cherry, :lemon, :bell, :lemon, :orange, :bell, :lemon, :doge, :lemon, :cherry, :lemon, :moon, :orange)
   end
 
-  def play(bet)
+  def play(bet, lines)
     bet = bet.to_i
     @reels.each(&:spin)
-    payout(bet, middle_line)
+
+    case lines
+    when 1
+      payout(bet, middle_line)
+    when 2
+      payout(bet, top_line) + payout(bet, bottom_line)
+    when 3
+      payout(bet, top_line) + payout(bet, middle_line) + payout(bet, bottom_line)
+    end
   end
 
   def all_lines

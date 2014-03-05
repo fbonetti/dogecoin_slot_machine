@@ -5,7 +5,6 @@
 #games {
 
   .slot-machine-container {
-    margin-top: 20px;
     margin-bottom: 10px;
     overflow: hidden;
   }
@@ -41,11 +40,26 @@
     border: 1px solid;
   }
 
-  .bet-group {
+  .line-group, .bet-group {
     input[type=radio] {
       width: 0px;
       opacity: 0;
     }
+  }
+
+  .row-arrow {
+    color: #FF9898;
+    font-size: 50px;
+    margin: 50px 0;
+    opacity: 0.25;
+  }
+
+  .row-arrow-active {
+    opacity: 1.0;
+  }
+
+  input[type=checkbox].row-number {
+    opacity: 0;
   }
 
 }

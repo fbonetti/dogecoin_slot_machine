@@ -20,37 +20,37 @@ $ ->
   randBetween = (min, max) ->
     Math.round(Math.random() * (max - min) + min)
 
+  getBetAmount = ->
+    parseInt($(".bet-group :radio:checked").val())
+  
+  getRowNumber = -> 
+    parseInt($(".line-group :radio:checked").val())
+
   $("[data-id=submit-bet]").click ->
     return null if $(this).attr("disabled")
-    betAmount = parseInt($(".bet-group :radio:checked").val())
+    $("[data-id=submit-bet]").attr("disabled", true)
 
     $.ajax {
       type: "POST",
       url: "/games",
-      data: {bet_amount: betAmount}
+      data: {bet_amount: getBetAmount(), lines: getRowNumber()}
       dataType: "json",
       success: (jsonObject) ->
-        $("[data-id=submit-bet]").attr("disabled", true)
-        reduceBalance(betAmount)
+        reduceBalance(getBetAmount() * getRowNumber())
         spinAllReels(jsonObject.data.rotation_offsets)
         setUpdateBalancePromise(jsonObject.data.balance, jsonObject.data.win_amount)
       error: (jqXHR) ->
         alert(jqXHR.responseJSON.message)
+        $("[data-id=submit-bet]").attr("disabled", false)
     }
 
   setUpdateBalancePromise = (balance, win_amount) ->
     $(".left-reel, .middle-reel, .right-reel").promise().done ->
       updateBalance(balance)
+      highlightBalance() if win_amount > 0
+
+      $("#winAmount").text(win_amount)
       $("[data-id=submit-bet]").attr("disabled", false)
-
-      if win_amount > 0
-        $("#balance").parent().css("color", "#FFF")
-        $("#balance").parent().animate({"color": "#999", 900})
-
-
-      # for i in [1..win_amount] by 1
-      #   console.log 'ok'
-      #   setTimeout((-> playSoundEffect("#dingSound")), i * 100)
 
   reduceBalance = (amount) ->
     currentBalance = parseInt($("#balance").text())
@@ -58,6 +58,12 @@ $ ->
 
   updateBalance = (balance) ->
     $("#balance").text(balance)
+
+  highlightBalance = ->
+    $("#balance").parent().css("color", "#FFF")
+    $("#balance").parent().animate({
+      'color': "#999"
+    }, 450)
 
   updateUsername = (username) ->
     $("#usernameLink").text(username)
@@ -71,6 +77,9 @@ $ ->
 
   $("#withdrawalLink").click ->
     $("#withdrawalModal").modal('show')
+
+  $("#paytableLink").click ->
+    $("#paytableModal").modal('show')
 
   $("#updateUsernameForm").submit (e) ->
     e.preventDefault()
@@ -104,21 +113,34 @@ $ ->
 
     $("#withdrawalModal").modal('hide')
 
-  currentBet = 5
+  updateTotalBet = ->
+    totalBet = getBetAmount() * getRowNumber()
+    $("#totalBet").text(totalBet)
 
   $(".bet-group :radio").click ->
+    updateTotalBet()
     if $(this).closest(".btn").hasClass("active") == false
-      newBet = parseInt($(this).val())
-      if newBet > currentBet
-        playSoundEffect("#betUpSound")
-      else
-        playSoundEffect("#betDownSound")
-
-      currentBet = newBet
-      $(".bet-group .btn").removeClass("active")
+      $(this).closest(".bet-group").find(".active").removeClass("active")
       $(this).closest(".btn").addClass("active")
 
-  playSoundEffect = (selector) ->
-    # soundEffect = $(selector).clone().get(0)
-    # soundEffect.volume = 0.5
-    # soundEffect.play()
+  $(".line-group :radio").click ->
+    updateTotalBet()
+    updateArrows()
+
+    if $(this).closest(".btn").hasClass("active") == false
+      $(this).closest(".line-group").find(".active").removeClass("active")
+      $(this).closest(".btn").addClass("active")
+
+
+
+  updateArrows = ->
+    $(".arrow-container .row-arrow").removeClass("row-arrow-active")
+
+    switch getRowNumber()
+      when 1
+        $(".arrow-container .row-arrow:nth-child(2)").addClass("row-arrow-active")
+      when 2
+        $(".arrow-container .row-arrow:nth-child(1)").addClass("row-arrow-active")
+        $(".arrow-container .row-arrow:nth-child(3)").addClass("row-arrow-active")
+      when 3
+        $(".arrow-container .row-arrow").addClass("row-arrow-active")

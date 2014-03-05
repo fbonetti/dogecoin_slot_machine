@@ -5,6 +5,7 @@ gem 'rails', '4.0.3'
 gem 'therubyracer'
 gem 'slim-rails'
 gem 'less-rails'
+gem 'jquery-ui-rails'
 
 # Use postgreSQL as the database for Active Record
 gem 'pg'
