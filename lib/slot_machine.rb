@@ -9,21 +9,19 @@ class Reel
   end
 
   def spin
-    random_rotation_amount = SecureRandom.random_number(@symbols.count - 1)
-    @rotation_offset = (@rotation_offset + random_rotation_amount) % @symbols.count
-    @symbols.rotate!(random_rotation_amount)
+    @rotation_offset = SecureRandom.random_number(@symbols.count)
   end
 
   def top_line
-    @symbols[0]
+    @symbols[@rotation_offset]
   end
 
   def middle_line
-    @symbols[1]
+    @symbols[(@rotation_offset + 1) % 20]
   end
 
   def bottom_line
-    @symbols[2]
+    @symbols[(@rotation_offset + 2) % 20]
   end
 end
 

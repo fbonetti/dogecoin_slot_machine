@@ -1,8 +1,10 @@
 SlotMachineApp::Application.routes.draw do
-  root to: "games#new"
+  root to: "games#index"
 
-  resources :games, only: [:new, :create], path_names: {new: "play"}
+  resources :games, only: [:index, :create]
   resources :withdrawals, only: [:create]
   resources :users, only: [:update]
+
+  get "admin/statistics", to: "admin#statistics"
 
 end

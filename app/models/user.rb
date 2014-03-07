@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
 
   before_create :assign_random_username
 
+  def self.total_approximate_balance
+    User.sum(:approximate_balance)
+  end
+
   def balance
     total_deposits    = rpc_client.getreceivedbyaddress(self.deposit_address).to_i
     total_win_amount  = self.games.sum(:win_amount)
@@ -21,6 +25,12 @@ class User < ActiveRecord::Base
 
   def qr_code_link
     "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=#{self.deposit_address}&choe=UTF-8"
+  end
+
+  # Users cannot withdraw more than once in a 30 second period
+
+  def can_withdraw?
+    (DateTime.now.to_i - self.withdrawals.order("created_at DESC").first.to_i) <= 60.seconds
   end
 
   private

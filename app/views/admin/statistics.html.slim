@@ -1,0 +1,24 @@
+#admin
+  .col-xs-3.col-xs-offset-3
+    .panel.panel-info
+      .panel-heading
+        h3.panel-title Average payback %
+      .panel-body
+        = number_to_percentage(@average_payback_percent, precision: 2)
+    .panel.panel-info
+      .panel-heading
+        h3.panel-title Total games
+      .panel-body
+        = @total_games
+
+  .col-xs-3
+    .panel.panel-info
+      .panel-heading
+        h3.panel-title Average games per day
+      .panel-body
+        = @average_games_per_day
+    .panel.panel-info
+      .panel-heading
+        h3.panel-title Total approximate user balance
+      .panel-body
+        = @total_approximate_user_balance.to_s + " Ð"

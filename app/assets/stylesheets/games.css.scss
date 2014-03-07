@@ -4,6 +4,12 @@
 
 #games {
 
+  .game-container {
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .slot-machine-container {
     margin-bottom: 10px;
     overflow: hidden;
@@ -54,12 +60,25 @@
     opacity: 0.25;
   }
 
+  .right-side-arrow {
+    margin-left: -20px;
+  }
+
   .row-arrow-active {
     opacity: 1.0;
   }
 
   input[type=checkbox].row-number {
     opacity: 0;
+  }
+
+  .recent-winners-container {
+    margin-top: 60px;
+  }
+
+  .winners-table {
+    color: #FFF;
+    font-weight: bold;
   }
 
 }

@@ -6,6 +6,7 @@ gem 'therubyracer'
 gem 'slim-rails'
 gem 'less-rails'
 gem 'jquery-ui-rails'
+gem 'bootstrap-sass', '~> 3.1.1'
 
 # Use postgreSQL as the database for Active Record
 gem 'pg'

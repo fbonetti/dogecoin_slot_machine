@@ -1,0 +1,79 @@
+#games.container-fluid
+  div.game-container
+    = form_tag games_path, method: :post, id: "createGameForm"
+      .row.slot-machine-container
+        .col-xs-1.arrow-container
+          .glyphicon.glyphicon-chevron-right.row-arrow
+          .glyphicon.glyphicon-chevron-right.row-arrow.row-arrow-active
+          .glyphicon.glyphicon-chevron-right.row-arrow
+        .col-xs-10
+          .reel.left-reel.shadow
+          .reel.middle-reel.shadow
+          .reel.right-reel.shadow
+        .col-xs-1.arrow-container
+          .glyphicon.glyphicon-chevron-left.row-arrow.right-side-arrow
+          .glyphicon.glyphicon-chevron-left.row-arrow.right-side-arrow.row-arrow-active
+          .glyphicon.glyphicon-chevron-left.row-arrow.right-side-arrow
+
+      .container-fluid
+        .col-xs-5.col-xs-offset-1
+          .well.well-sm
+            strong Total Bet:
+            span#totalBet.pull-right 5
+        .col-xs-5
+          .well.well-sm
+            strong Win:
+            span#winAmount.pull-right 0
+
+      .container-fluid
+        .col-xs-10.col-xs-offset-1
+          .btn-group.btn-group-justified.line-group
+            .btn-group.btn-group-lg
+              = label_tag "line1", nil, class: "btn btn-default active"
+                = radio_button_tag "game[lines]", 1, true, id: "line1", class: "bet-radio"
+                span 1 Line
+            .btn-group.btn-group-lg
+              = label_tag "line2", nil, class: "btn btn-default"
+                = radio_button_tag "game[lines]", 2, false, id: "line2", class: "bet-radio"
+                span 2 Lines
+            .btn-group.btn-group-lg
+              = label_tag "line3", nil, class: "btn btn-default"
+                = radio_button_tag "game[lines]", 3, false, id: "line3", class: "bet-radio"
+                span 3 Lines
+
+      .container-fluid
+        .col-xs-10.col-xs-offset-1
+          .btn-group.btn-group-justified.bet-group
+            .btn-group.btn-group-lg
+              = label_tag "bet1", nil, class: "btn btn-default active"
+                = radio_button_tag "game[bet_amount]", 5, true, id: "bet1", class: "bet-radio"
+                span 5
+            .btn-group.btn-group-lg
+              = label_tag "bet2", nil, class: "btn btn-default"
+                = radio_button_tag "game[bet_amount]", 10, false, id: "bet2", class: "bet-radio"
+                span 10
+            .btn-group.btn-group-lg
+              = label_tag "bet3", nil, class: "btn btn-default"
+                = radio_button_tag "game[bet_amount]", 15, false, id: "bet3", class: "bet-radio"
+                span 15
+            .btn-group.btn-group-lg
+              = label_tag "bet4", nil, class: "btn btn-default"
+                = radio_button_tag "game[bet_amount]", 20, false, id: "bet4", class: "bet-radio"
+                span 20
+            .btn-group.btn-group-lg
+              = submit_tag "Spin!", class: "btn btn-primary"
+
+  .row.recent-winners-container
+    .col-xs-6.col-xs-offset-3
+      table.table.winners-table
+        tr
+          th Username
+          th Datetime
+          th Win amount
+        - @recent_winners.each do |game|
+          tr
+            td = game.user.username
+            td = game.created_at
+            td = "+#{game.win_amount}"
+
+  = render partial: "modals"

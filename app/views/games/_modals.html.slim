@@ -1,0 +1,78 @@
+#usernameModal.modal.fade
+  .modal-dialog
+    .modal-content
+      = form_for @current_user, html: {id: "updateUsernameForm"} do |f|
+        .modal-header
+          h4.modal-title Your username
+        .modal-body
+          .form-group
+            = f.text_field :username, class: "form-control", required: true
+        .modal-footer
+          button.btn.btn-default data-dismiss="modal" type="button" Close
+          = f.submit "Save", class: "btn btn-primary"
+
+#depositModal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h4.modal-title Your account address
+      .modal-body
+        .row
+          .col-xs-4
+            img.qr-code src="#{@current_user.qr_code_link}"
+          .col-xs-8
+            .form-group
+              input.form-control type="text" disabled="disabled" value="#{@current_user.deposit_address}"
+            .form-group
+              p Deposits typically take less than 5 minutes. You can use this address forever.
+      .modal-footer
+        button.btn.btn-default data-dismiss="modal" type="button" Close
+
+#withdrawalModal.modal.fade
+  .modal-dialog
+    .modal-content
+      = form_tag withdrawals_path, id: "createWithdrawalForm"
+        .modal-header
+          h4.modal-title Your coin address
+        .modal-body
+          .form-group
+            = text_field_tag "withdrawal_address", nil, class: "form-control", placeholder: "Coin address", required: true
+          p Withdrawals typically take less the 5 minutes. Thanks for playing!
+        .modal-footer
+          button.btn.btn-default data-dismiss="modal" type="button" Close
+          = submit_tag "Send me my coins!", class: "btn btn-primary"
+
+#paytableModal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h4.modal-title Paytable
+      .modal-body
+        table.table.table-striped
+          tbody
+            tr
+              td.strong 3 Doge
+              td.text-right x500
+            tr
+              td 3 Moons
+              td.text-right x100
+            tr
+              td 3 Rockets
+              td.text-right x50
+            tr
+              td 3 Bells
+              td.text-right x20
+            tr
+              td 3 Oranges
+              td.text-right x15
+            tr
+              td 3 Cherries
+              td.text-right x10
+            tr
+              td Cherry, cherry, any
+              td.text-right x5
+            tr
+              td Cherry, any, any
+              td.text-right x2
+      .modal-footer
+        button.btn.btn-default data-dismiss="modal" type="button" Close

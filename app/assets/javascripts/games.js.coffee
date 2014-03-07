@@ -26,14 +26,14 @@ $ ->
   getRowNumber = -> 
     parseInt($(".line-group :radio:checked").val())
 
-  $("[data-id=submit-bet]").click ->
-    return null if $(this).attr("disabled")
-    $("[data-id=submit-bet]").attr("disabled", true)
+  $("#createGameForm").submit (e) ->
+    e.preventDefault()
+    $("#createGameForm").find(":submit").attr("disabled", true)
 
     $.ajax {
       type: "POST",
-      url: "/games",
-      data: {bet_amount: getBetAmount(), lines: getRowNumber()}
+      url: $(this).attr("action"),
+      data: $(this).serialize(),
       dataType: "json",
       success: (jsonObject) ->
         reduceBalance(getBetAmount() * getRowNumber())
@@ -41,7 +41,7 @@ $ ->
         setUpdateBalancePromise(jsonObject.data.balance, jsonObject.data.win_amount)
       error: (jqXHR) ->
         alert(jqXHR.responseJSON.message)
-        $("[data-id=submit-bet]").attr("disabled", false)
+        $("#createGameForm").find(":submit").attr("disabled", false)
     }
 
   setUpdateBalancePromise = (balance, win_amount) ->
@@ -50,7 +50,7 @@ $ ->
       highlightBalance() if win_amount > 0
 
       $("#winAmount").text(win_amount)
-      $("[data-id=submit-bet]").attr("disabled", false)
+      $("#createGameForm").find(":submit").attr("disabled", false)
 
   reduceBalance = (amount) ->
     currentBalance = parseInt($("#balance").text())
