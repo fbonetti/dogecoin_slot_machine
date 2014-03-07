@@ -7,7 +7,7 @@ class Withdrawal < ActiveRecord::Base
   validates :amount, presence: true, numericality: {only_integer: true}
   validate :valid_withdrawal_address
 
-
+  after_create :update_approximate_user_balance
 
   private
 
@@ -19,6 +19,10 @@ class Withdrawal < ActiveRecord::Base
 
   def rpc_client
     @rpc_client ||= DogecoinRPC.new(SECRETS["DOGECOIN_RPC_URL"])
+  end
+
+  def update_approximate_user_balance
+    self.user.update_approximate_balance
   end
 
 end

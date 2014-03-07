@@ -33,6 +33,11 @@ class User < ActiveRecord::Base
     (DateTime.now.to_i - self.withdrawals.order("created_at DESC").first.to_i) <= 60.seconds
   end
 
+  def update_approximate_balance
+    self.approximate_balance = self.balance
+    self.save
+  end
+
   private
 
   def rpc_client
