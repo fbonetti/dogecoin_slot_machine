@@ -10,6 +10,10 @@ class AdminController < ApplicationController
     @profit = Game.total_profit - PromotionRedemption.total_amount
     @total_approximate_user_balance = User.total_approximate_balance
     @wallet_balance = rpc_client.getbalance
+
+    @promotion_payout = PromotionRedemption.total_amount
+    @outstanding_redemptions = Promotion.sum(:limit) - PromotionRedemption.count
+    @promotion_count = Promotion.count
   end
 
   private

@@ -10,6 +10,11 @@
         h3.panel-title Profit
       .panel-body
         = @profit.to_s + " Ð"
+    .panel.panel-warning
+      .panel-heading
+        h3.panel-title Promotion payout
+      .panel-body
+        = @promotion_payout.to_s + " Ð"
 
   .col-md-4
     .panel.panel-info
@@ -22,6 +27,11 @@
         h3.panel-title Total approximate user balance
       .panel-body
         = @total_approximate_user_balance.to_s + " Ð"
+    .panel.panel-warning
+      .panel-heading
+        h3.panel-title Outstanding redemptions
+      .panel-body
+        = @outstanding_redemptions
 
   .col-md-4
     .panel.panel-info
@@ -34,3 +44,8 @@
         h3.panel-title Wallet balance
       .panel-body
         = @wallet_balance.to_s + " Ð"
+    .panel.panel-warning
+      .panel-heading
+        h3.panel-title Promotion count
+      .panel-body
+        = @promotion_count
