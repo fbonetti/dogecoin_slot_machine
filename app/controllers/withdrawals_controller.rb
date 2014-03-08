@@ -14,7 +14,7 @@ class WithdrawalsController < ApplicationController
         user_id: @current_user.id, withdrawal_address: withdrawal_params[:withdrawal_address],
         amount: @current_user.balance, ip_address: request.remote_ip
       )
-      rpc_client.sendtoaddress withdrawal.withdrawal_address, withdrawal.amount
+      rpc_client.sendtoaddress withdrawal.withdrawal_address, withdrawal.amount.to_s("8F")
       success_response(balance: 0)
     end
   end
