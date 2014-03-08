@@ -15,7 +15,7 @@ class Game < ActiveRecord::Base
   end
 
   def self.average_payback_percent
-    Game.sum(:bet_amount).to_f / Game.sum(:win_amount).to_f * 100
+    Game.sum(:win_amount).to_f / Game.sum(:bet_amount).to_f * 100
   end
 
   def self.average_games_per_day
