@@ -53,7 +53,7 @@ $ ->
       $("#createGameForm").find(":submit").attr("disabled", false)
 
   reduceBalance = (amount) ->
-    currentBalance = parseInt($("#balance").text())
+    currentBalance = parseFloat($("#balance").text())
     updateBalance(currentBalance - amount)
 
   updateBalance = (balance) ->
