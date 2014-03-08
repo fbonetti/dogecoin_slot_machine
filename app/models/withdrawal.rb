@@ -4,7 +4,7 @@ class Withdrawal < ActiveRecord::Base
   belongs_to :user
   
   validates :user_id, presence: true, numericality: {only_integer: true}
-  validates :amount, presence: true, numericality: {only_integer: true}
+  validates :amount, presence: true, numericality: {greater_than: 0}
   validate :valid_withdrawal_address
 
   after_create :update_approximate_user_balance

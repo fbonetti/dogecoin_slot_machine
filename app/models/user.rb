@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   end
 
   def balance
-    total_deposits     = rpc_client.getreceivedbyaddress(self.deposit_address).to_i
+    total_deposits     = rpc_client.getreceivedbyaddress(self.deposit_address)
     total_win_amount   = self.games.sum(:win_amount)
     total_redemptions  = self.promotion_redemptions.sum(:amount)
     total_bet_amount   = self.games.sum(:bet_amount)
