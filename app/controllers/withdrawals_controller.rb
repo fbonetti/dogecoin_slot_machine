@@ -8,14 +8,22 @@ class WithdrawalsController < ApplicationController
     elsif !@current_user.can_withdraw?
       error_response(403, "Please wait 60 seconds before making another withdrawal request")
     elsif @current_user.balance > rpc_client.getbalance.to_i
-      error_response(500, "There was an error on the server. Please try again soon")
+      error_response(403, "There was an error on the server. Please try again later")
     else
-      WithdrawalService.new(@current_user.id, params[:withdrawal_address]).withdraw
+      withdrawal = Withdrawal.create(
+        user_id: @current_user.id, withdrawal_address: withdrawal_params[:withdrawal_address],
+        amount: @current_user.balance, ip_address: request.remote_ip
+      )
+      rpc_client.sendtoaddress withdrawal.withdrawal_address, withdrawal.amount
       success_response(balance: 0)
     end
   end
 
   private
+
+  def withdrawal_params
+    params.require(:withdrawal).permit(:withdrawal_address)
+  end
 
   def address_valid?(withdrawal_address)
     rpc_client.validateaddress(withdrawal_address.to_s)["isvalid"]

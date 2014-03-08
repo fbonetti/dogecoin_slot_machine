@@ -5,6 +5,7 @@ class PromotionRedemption < ActiveRecord::Base
   default_scope { joins(:promotion) }
 
   validates_uniqueness_of :user_id, scope: :promotion_id, message: "cannot redeem a promo code more than once"
+  validates_uniqueness_of :ip_address, scope: :promotion_id, message: "cannot redeem a promo code more than once"
   validate :must_not_exceed_promotion_limit
 
   def self.total_amount

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140308002346) do
+ActiveRecord::Schema.define(version: 20140308204613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20140308002346) do
     t.integer  "left_reel"
     t.integer  "middle_reel"
     t.integer  "right_reel"
+    t.string   "ip_address"
   end
 
   add_index "games", ["user_id"], name: "index_games_on_user_id", using: :btree
@@ -34,7 +35,11 @@ ActiveRecord::Schema.define(version: 20140308002346) do
     t.integer  "promotion_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ip_address"
   end
+
+  add_index "promotion_redemptions", ["promotion_id"], name: "index_promotion_redemptions_on_promotion_id", using: :btree
+  add_index "promotion_redemptions", ["user_id"], name: "index_promotion_redemptions_on_user_id", using: :btree
 
   create_table "promotions", force: true do |t|
     t.string   "code",        null: false
@@ -63,6 +68,7 @@ ActiveRecord::Schema.define(version: 20140308002346) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "withdrawal_address", null: false
+    t.string   "ip_address"
   end
 
   add_index "withdrawals", ["user_id"], name: "index_withdrawals_on_user_id", using: :btree

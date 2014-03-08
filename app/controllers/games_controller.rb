@@ -18,7 +18,7 @@ class GamesController < ApplicationController
       slot_machine = SlotMachine.new
       game_attributes = {
         user_id: @current_user.id, bet_amount: bet_amount * lines,
-        win_amount: slot_machine.play(bet_amount, lines)
+        win_amount: slot_machine.play(bet_amount, lines), ip_address: request.remote_ip
       }
       game = Game.create(game_attributes.merge(slot_machine.rotation_offsets))
       success_response(win_amount: game.win_amount, rotation_offsets: slot_machine.rotation_offsets, balance: @current_user.balance)

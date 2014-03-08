@@ -17,11 +17,11 @@ class Reel
   end
 
   def middle_line
-    @symbols[(@rotation_offset + 1) % 20]
+    @symbols[(@rotation_offset + 1) % @symbols.count]
   end
 
   def bottom_line
-    @symbols[(@rotation_offset + 2) % 20]
+    @symbols[(@rotation_offset + 2) % @symbols.count]
   end
 end
 

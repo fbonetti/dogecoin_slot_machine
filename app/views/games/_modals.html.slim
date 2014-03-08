@@ -36,7 +36,7 @@
           h4.modal-title Your coin address
         .modal-body
           .form-group
-            = text_field_tag "withdrawal_address", nil, class: "form-control", placeholder: "Coin address", required: true
+            = text_field_tag "withdrawal[withdrawal_address]", nil, class: "form-control", placeholder: "Coin address", required: true
           p Withdrawals typically take less the 5 minutes. Thanks for playing!
         .modal-footer
           button.btn.btn-default data-dismiss="modal" type="button" Close
