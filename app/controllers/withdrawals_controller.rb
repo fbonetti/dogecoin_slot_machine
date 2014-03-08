@@ -7,6 +7,8 @@ class WithdrawalsController < ApplicationController
       error_response(400, "You must enter a valid Dogecoin address")
     elsif !@current_user.can_withdraw?
       error_response(403, "Please wait 60 seconds before making another withdrawal request")
+    elsif @current_user.balance > rpc_client.getbalance.to_i
+      error_response(500, "There was an error on the server. Please try again soon")
     else
       WithdrawalService.new(@current_user.id, params[:withdrawal_address]).withdraw
       success_response(balance: 0)

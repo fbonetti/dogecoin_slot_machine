@@ -10,10 +10,10 @@ class GamesController < ApplicationController
   def create
     if ![5, 10, 15, 20].include?(bet_amount)
       error_response(400, "Bet must be 5, 10, 15, or 20")
-    elsif (@current_user.balance - (bet_amount * lines)) < 0
-      error_response(403, "Your balance is too low! Please deposit more Dogecoin to #{@current_user.deposit_address}")
     elsif ![1, 2, 3].include?(lines)
       error_response(400, "You must choose a valid number of lines")
+    elsif (@current_user.balance - (bet_amount * lines)) < 0
+      error_response(403, "Your balance is too low! Please deposit more Dogecoin to #{@current_user.deposit_address}")
     else
       slot_machine = SlotMachine.new
       game_attributes = {

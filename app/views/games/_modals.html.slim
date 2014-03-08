@@ -31,7 +31,7 @@
 #withdrawalModal.modal.fade
   .modal-dialog
     .modal-content
-      = form_tag withdrawals_path, id: "createWithdrawalForm"
+      = form_tag withdrawals_path, method: :post, id: "createWithdrawalForm"
         .modal-header
           h4.modal-title Your coin address
         .modal-body
@@ -76,3 +76,17 @@
               td.text-right x2
       .modal-footer
         button.btn.btn-default data-dismiss="modal" type="button" Close
+
+#promotionModal.modal.fade
+  .modal-dialog
+    .modal-content
+      = form_tag promotion_redemptions_path, method: :post, id: "createPromotionRedemptionForm"
+        .modal-header
+          h4.modal-title Promo code
+        .modal-body
+          .form-group
+            = text_field_tag "promotion_redemption[code]", nil, class: "form-control", required: true
+          p Your balance will updated instantly after entering a valid promotion code.
+        .modal-footer
+          button.btn.btn-default data-dismiss="modal" type="button" Close
+          = submit_tag "Submit", class: "btn btn-primary"

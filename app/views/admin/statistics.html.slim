@@ -1,24 +1,36 @@
-#admin
-  .col-xs-3.col-xs-offset-3
+#admin.col-md-8.col-md-offset-2
+  .col-md-4
     .panel.panel-info
       .panel-heading
         h3.panel-title Average payback %
       .panel-body
         = number_to_percentage(@average_payback_percent, precision: 2)
-    .panel.panel-info
+    .panel.panel-success
       .panel-heading
-        h3.panel-title Total games
+        h3.panel-title Profit
       .panel-body
-        = @total_games
+        = @profit.to_s + " Ð"
 
-  .col-xs-3
+  .col-md-4
     .panel.panel-info
       .panel-heading
         h3.panel-title Average games per day
       .panel-body
         = @average_games_per_day
-    .panel.panel-info
+    .panel.panel-success
       .panel-heading
         h3.panel-title Total approximate user balance
       .panel-body
         = @total_approximate_user_balance.to_s + " Ð"
+
+  .col-md-4
+    .panel.panel-info
+      .panel-heading
+        h3.panel-title Total games
+      .panel-body
+        = @total_games
+    .panel.panel-success
+      .panel-heading
+        h3.panel-title Wallet balance
+      .panel-body
+        = @wallet_balance.to_s + " Ð"

@@ -22,6 +22,10 @@ class Game < ActiveRecord::Base
     (Game.count.to_f / Game.select("created_at::date").distinct.count.to_f).ceil
   end
 
+  def self.total_profit
+    Game.sum(:bet_amount) - Game.sum(:win_amount)
+  end
+
   private
 
   def update_approximate_user_balance

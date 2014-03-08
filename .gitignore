@@ -18,3 +18,7 @@
 # Ignore database.yml and api_secrets.yml for security reasons
 /config/database.yml
 /config/secrets.yml
+
+# Ignore capistrano stuff
+
+/deploy/production.rb

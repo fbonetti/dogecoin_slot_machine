@@ -81,6 +81,38 @@ $ ->
   $("#paytableLink").click ->
     $("#paytableModal").modal('show')
 
+  $("#promotionLink").click ->
+    $("#promotionModal").modal('show')
+
+  prependAlertToModal = (modalSelector, message) ->
+    dismissAlertBox(modalSelector)
+    $(modalSelector).find(".modal-body").prepend("
+      <div class='alert alert-danger alert-dismissable'>
+        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+        #{message}
+      </div>
+    ")
+
+  dismissAlertBox = (modalSelector) ->
+    $(modalSelector).find(".alert.alert-danger.alert-dismissable").remove();
+
+  $("#createPromotionRedemptionForm").submit (e) ->
+    e.preventDefault()
+
+    $.ajax {
+      type: "POST",
+      url: jQuery(this).attr("action"),
+      data: jQuery(this).serialize()
+      dataType: "json",
+      success: (jsonObject) ->
+        updateBalance(jsonObject.data.balance)
+        highlightBalance()
+        $("#promotionModal").modal('hide')
+        dismissAlertBox("#promotionModal")
+      error: (jqXHR) ->
+        prependAlertToModal("#promotionModal", jqXHR.responseJSON.message)
+    }
+
   $("#updateUsernameForm").submit (e) ->
     e.preventDefault()
 
@@ -91,11 +123,11 @@ $ ->
       dataType: "json",
       success: (jsonObject) ->
         updateUsername(jsonObject.data.username)
+        $("#usernameModal").modal('hide')
+        dismissAlertBox("#usernameModal")
       error: (jqXHR) ->
-        alert(jqXHR.responseJSON.message)
+        prependAlertToModal("#usernameModal", jqXHR.responseJSON.message)
     }
-
-    $("#usernameModal").modal('hide')
 
   $("#createWithdrawalForm").submit (e) ->
     e.preventDefault()
@@ -107,11 +139,11 @@ $ ->
       dataType: "json",
       success: (jsonObject) ->
         updateBalance(jsonObject.data.balance)
+        $("#withdrawalModal").modal('hide')
+        dismissAlertBox("#withdrawalModal")
       error: (jqXHR) ->
-        alert(jqXHR.responseJSON.message)
+        prependAlertToModal("#withdrawalModal", jqXHR.responseJSON.message)
     }
-
-    $("#withdrawalModal").modal('hide')
 
   updateTotalBet = ->
     totalBet = getBetAmount() * getRowNumber()
@@ -130,8 +162,6 @@ $ ->
     if $(this).closest(".btn").hasClass("active") == false
       $(this).closest(".line-group").find(".active").removeClass("active")
       $(this).closest(".btn").addClass("active")
-
-
 
   updateArrows = ->
     $(".arrow-container .row-arrow").removeClass("row-arrow-active")

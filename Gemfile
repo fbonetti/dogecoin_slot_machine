@@ -33,7 +33,13 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 1.2'
 
 group :development do
+  gem 'capistrano', '~> 3.1.0'
+end
+
+group :development, :test do
   gem 'pry'
+  gem 'rspec-rails'
+  gem "factory_girl_rails", "~> 4.0"
 end
 
 group :doc do

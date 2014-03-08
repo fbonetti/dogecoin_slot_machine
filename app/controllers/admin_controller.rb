@@ -4,9 +4,18 @@ class AdminController < ApplicationController
 
   def statistics
     @average_payback_percent = Game.average_payback_percent
-    @total_games = Game.count
     @average_games_per_day = Game.average_games_per_day
+    @total_games = Game.count
+
+    @profit = Game.total_profit - PromotionRedemption.total_amount
     @total_approximate_user_balance = User.total_approximate_balance
+    @wallet_balance = rpc_client.getbalance
+  end
+
+  private
+
+  def rpc_client
+    @rpc_client ||= DogecoinRPC.new(SECRETS["DOGECOIN_RPC_URL"])
   end
 
 end

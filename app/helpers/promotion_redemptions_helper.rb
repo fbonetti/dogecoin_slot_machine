@@ -1,0 +1,2 @@
+module PromotionRedemptionsHelper
+end
