@@ -10,12 +10,14 @@ class WithdrawalsController < ApplicationController
     elsif @current_user.balance > rpc_client.getbalance
       error_response(403, "There was an error on the server. Please try again later")
     else
-      withdrawal = Withdrawal.create(
-        user_id: @current_user.id, withdrawal_address: withdrawal_params[:withdrawal_address],
-        amount: @current_user.balance, ip_address: request.remote_ip
-      )
-      rpc_client.sendtoaddress withdrawal.withdrawal_address, withdrawal.amount.to_s("8F")
-      success_response(balance: 0)
+      ActiveRecord::Base.transaction do
+        withdrawal = Withdrawal.create(
+          user_id: @current_user.id, withdrawal_address: withdrawal_params[:withdrawal_address],
+          amount: @current_user.balance, ip_address: request.remote_ip
+        )
+        rpc_client.sendtoaddress withdrawal.withdrawal_address, withdrawal.amount.to_f
+        success_response(balance: 0)
+      end
     end
   end
 
