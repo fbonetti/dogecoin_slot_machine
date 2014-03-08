@@ -53,8 +53,10 @@ $ ->
       $("#createGameForm").find(":submit").attr("disabled", false)
 
   reduceBalance = (amount) ->
+    precision = $("#balance").text().split(".")[1].length
+    precision = 8 if precision > 8
     currentBalance = parseFloat($("#balance").text())
-    updateBalance(currentBalance - amount)
+    updateBalance((currentBalance - amount).toFixed(precision))
 
   updateBalance = (balance) ->
     $("#balance").text(balance)
