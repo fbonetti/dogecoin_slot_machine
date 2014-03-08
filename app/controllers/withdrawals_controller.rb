@@ -3,7 +3,7 @@ class WithdrawalsController < ApplicationController
   def create
     if @current_user.balance <= 0
       error_response(403, "Your balance is too low!")
-    elsif address_valid?(params[:withdrawal_address]) == false
+    elsif address_valid?(withdrawal_params[:withdrawal_address]) == false
       error_response(400, "You must enter a valid Dogecoin address")
     elsif !@current_user.can_withdraw?
       error_response(403, "Please wait 60 seconds before making another withdrawal request")
