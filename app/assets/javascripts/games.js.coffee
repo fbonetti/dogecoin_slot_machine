@@ -8,12 +8,12 @@ $ ->
     spinSingleReel(2, rotationOffsets.right_reel)
 
   spinSingleReel = (reelNumber, relativeTargetOffset) ->
-    currentPosition = parseInt($(".reel:eq(#{reelNumber})").css("background-position-y"))
+    currentPosition = parseInt($(".reel:eq(#{reelNumber})").css("background-position").split(" ")[1].replace("px", ""))
     roundedPosition = Math.ceil(currentPosition / REEL_IMAGE_HEIGHT) * REEL_IMAGE_HEIGHT
     targetOffset = roundedPosition + (randBetween(4, 7) * REEL_IMAGE_HEIGHT) - (relativeTargetOffset * SINGLE_IMAGE_HEIGHT)
 
     $(".reel:eq(#{reelNumber})").animate {
-      'background-position-y': targetOffset,
+      'background-position': "50% #{targetOffset}px",
       'easing': 'easeOutCubic'
     }, randBetween(1500, 3000)
 
