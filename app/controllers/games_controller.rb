@@ -8,8 +8,8 @@ class GamesController < ApplicationController
   end
 
   def create
-    if ![5, 10, 15, 20].include?(bet_amount)
-      error_response(400, "Bet must be 5, 10, 15, or 20")
+    if ![5, 20, 50, 100].include?(bet_amount)
+      error_response(400, "Bet must be 5, 20, 50, or 100")
     elsif ![1, 2, 3].include?(lines)
       error_response(400, "You must choose a valid number of lines")
     elsif (@current_user.balance - (bet_amount * lines)) < 0

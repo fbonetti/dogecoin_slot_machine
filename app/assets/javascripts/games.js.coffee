@@ -46,14 +46,14 @@ $ ->
 
   setUpdateBalancePromise = (balance, win_amount) ->
     $(".left-reel, .middle-reel, .right-reel").promise().done ->
-      updateBalance(balance)
+      updateBalance(parseFloat(balance))
       highlightBalance() if win_amount > 0
 
       $("#winAmount").text(win_amount)
       $("#createGameForm").find(":submit").attr("disabled", false)
 
   reduceBalance = (amount) ->
-    precision = $("#balance").text().split(".")[1].length
+    precision = ($("#balance").text().split(".")[1] || "").length
     precision = 8 if precision > 8
     currentBalance = parseFloat($("#balance").text())
     updateBalance((currentBalance - amount).toFixed(precision))
