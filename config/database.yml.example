@@ -1,0 +1,23 @@
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: slot_machine_app_development
+  pool: 5
+  username: ###
+  password: ###
+
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: slot_machine_app_test
+  pool: 5
+  username: ###
+  password: ###
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: slot_machine_app_production
+  pool: 5
+  username: ###
+  password: ###
